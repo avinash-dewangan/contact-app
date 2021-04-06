@@ -1,27 +1,32 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-class AddContact extends React.Component {
-    state = {
-        name: "",
-        email: "",
-    };
-    add = (e) => {
+
+class EditContact extends React.Component {
+    constructor(props) {
+        super(props)
+        const { id, name, email } = props.location.state.contact;
+        this.state = {
+            id: id,
+            name: name,
+            email: email
+        }
+    }
+    update = (e) => {
         e.preventDefault();
         if (this.state.name === "" ||
             this.state.email === "") {
             alert("All the filds are mandtory!");
             return
         }
-        this.props.addContactHandler(this.state);
+        this.props.updateContactHandler(this.state);
         this.setState({ name: "", email: "" });
-        //console.log(this.props)
-        // this.props.history.push("/");
+        console.log(this.props)
+        this.props.history.push("/");
     }
     render() {
         return (
             <div className="ui main">
-                <h2>Add Contact</h2>
-                <form className="ui form" onSubmit={this.add}>
+                <h2>Edit Contact</h2>
+                <form className="ui form" onSubmit={this.update}>
                     <div className="field">
                         <label htmlFor="">Name</label>
                         <input type="text" name="name" placeholder="Name"
@@ -34,8 +39,7 @@ class AddContact extends React.Component {
                             value={this.state.email}
                             onChange={(e) => this.setState({ email: e.target.value })} />
                     </div>
-                    <button className="ui button blue">Add</button>
-
+                    <button className="ui button blue">Update</button>
                 </form>
             </div>
         );
@@ -43,4 +47,4 @@ class AddContact extends React.Component {
 
 }
 
-export default AddContact
+export default EditContact
